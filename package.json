@@ -1,5 +1,6 @@
 {
   "name": "instagram-clone2",
+  "homepage": "https://curley2121.github.io/instagram-clone2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,7 +33,7 @@
       "not dead",
       "not op_mini all"
     ],
-    "homepage": "https://curley2121.github.io/instagram-clone2/",
+    
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
