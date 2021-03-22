@@ -3,6 +3,7 @@ import css from './Navbar.module.css';
 import publicUrl from 'utils/publicUrl';
 
 function Navbar(props) {
+    
     function handleNavChange(page){
       console.log('page', page);
         if (props.onNavChange){
