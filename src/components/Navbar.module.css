@@ -23,7 +23,24 @@
 
 
 }
-.navItem button{
+.navItem Link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    background-color: #ffffff; /* Green */
+    width: 100%;
+    height: 100%;
+    border: none;
+    transition-duration: 0.4s;
+    outline: none;
+    cursor:pointer;
+
+    
+}
+.navItem img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
     background-color: #ffffff; /* Green */
     width: 100%;
     height: 100%;
@@ -35,7 +52,7 @@
     
 }
 
-  .navItem button:hover {
+  .navItem img:hover {
     color: black;
     background-color: rgb(205, 248, 255);
   }

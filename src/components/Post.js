@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import css from "./Post.module.css";
 import timespan from "utils/timespan.js";
 import publicUrl from "utils/publicUrl.js";
+import {
+  Link
+} from "react-router-dom";
 
 function Post(props) {
     const [comment, setComment] = useState('');
@@ -9,10 +12,12 @@ function Post(props) {
   return (
     <article className={css.post}>
       <header className={css.header}>
+      <Link key={props.user.id} to={`/profile/${props.user.id}`}>
         <button className={css.user} to={`/profile/${props.user.id}`}>
           <img src={publicUrl(props.user.photo)} alt="User Profile" />
           <span>{props.user.id} </span>
         </button>
+        </Link>
       </header>
       <section className={css.content}>
         <div className={css.imgContainer}>
@@ -54,9 +59,11 @@ function Post(props) {
           </div>
           {props.comments.map((comment, i) => (
             <div key={i}>
+              <Link key={comment.userId} to={`/profile/${comment.userId}`}>
               <span>
                 {comment.userId}
               </span>
+              </Link>
               <span>{comment.text}</span>
             </div>
           ))}

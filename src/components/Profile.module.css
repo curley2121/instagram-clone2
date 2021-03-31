@@ -65,3 +65,41 @@
     cursor:pointer;
 
 }
+
+.followBut {
+    position: absolute;
+    top: 130px;
+    left: 175px;
+    color: #ffffff;
+    font-size: 16px;
+    
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px;
+    outline: none;
+  
+    background-color: #00a2ff; 
+    
+  
+  
+  }
+  .unfollowBut {
+    position: absolute;
+    top: 130px;
+    left: 175px;
+    color: #424242;
+    font-size: 16px;
+    
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: 4px;
+    border-color: black;
+    
+  
+    background-color: #c7c7c7; 
+    
+  
+  
+  }

@@ -11,12 +11,18 @@ import Profile from "./Profile.js";
 import Navbar from "./Navbar.js";
 import initialStore from 'utils/initialStore';
 import uniqueId from 'utils/uniqueId';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
   const [page, setPage] = useState('home');
   const [store, setStore] = useState(initialStore);
 
   return (
+    <Router basename={process.env.PUBLIC_URL}>
     <div className={css.container}>
       <Header />
       <main className={css.content}>
@@ -24,29 +30,35 @@ function App() {
       </main>
       <Navbar onNavChange={setPage}/>
     </div>
+    </Router>
   );
 
 
   function renderMain() {
-    switch (page) {
-      case "home":
-        return <Home
-        store={store}
-        onLike={addLike}
-        onUnlike={removeLike}
-        onComment={addComment} 
-      />;
-      case "explore":
-        return <Explore />;
-      case "activity":
-        return <Activity />;
-      case "newpost":
-        return <NewPost store={store} onPost={addPost} onCancelPost={cancelPost}/>;
-      case "profile":
-        return <Profile store={store}/>;
-      default:
-        return <Home />;
-    }
+    return (
+      <Switch>
+        <Route path="/profile/:userId?">
+            <Profile store={store} onFollow={addFollower} onUnfollow={removeFollower}/>
+        </Route>
+        <Route path="/NewPost">
+            <NewPost store={store} onPost={addPost}/>
+        </Route>
+        <Route path="/activity">
+            <Activity />
+        </Route>
+        <Route path="/explore">
+            <Explore />
+        </Route>
+        <Route path="/:postId?">
+          <Home store={store}
+                onLike={addLike}
+                onUnlike={removeLike}
+                onComment={addComment}/>
+        </Route>
+      </Switch>
+
+    );
+
   }
 
   function addLike(postId){
@@ -68,6 +80,24 @@ function App() {
         ...store,// spread props. make sure you understand this
         likes: store.likes.filter(like=>!(like.userId===store.currentUserId && like.postId===postId))
       });
+  }
+  function addFollower(userId, followerId){
+        const foll = {
+          userId: userId, 
+          followerId: followerId
+      };
+      
+      setStore({
+        ...store,
+        followers: store.followers.concat(foll)
+      });
+  }
+  function removeFollower(userId, followerId){
+    // use filter
+    setStore({
+      ...store,// spread props. make sure you understand this
+      followers: store.followers.filter(follower=>!(follower.userId===userId && follower.followerId===followerId))
+    });
   }
 
   function addComment(postId, text){
@@ -99,13 +129,8 @@ function App() {
         posts: store.posts.concat(newPost)
     });
 		// 3. Call setPage to come back to the home page
-    setPage("home");
   }
-	function cancelPost(){
-		// TODO:
-		// 1. Call setPage to come back to the home page (we will use Router to improve this)
-    setPage("home");
-	}
+
 	// TODO: Pass "store", "addPost", "cancelPost" to <NewPost/>	
 
 

@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import css from './NewPost.module.css';
 import FileLoader from './FileLoader.js';
+import {
+  useHistory
+} from "react-router-dom";
 
 function NewPost(props) {
+  const history = useHistory();
   const [dragging, setDragging] = useState(false); // to show a dragging effect
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
@@ -51,6 +55,7 @@ function NewPost(props) {
       setError("Need a description");
     } else {
       props.onPost(photo, desc);
+      history.push('/');
       setError('');
     }
     
@@ -61,7 +66,8 @@ function NewPost(props) {
   }
   function handleCancel(){
     // TODO: Notify the parent about the cancellation
-    props.onCancelPost();
+    //props.onCancelPost();
+    history.push('/');
   }
   return (
     <div>
