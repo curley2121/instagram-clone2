@@ -1,24 +1,35 @@
-import React from 'react';
+
 import Post from "./Post.js";
 import { useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { StoreContext } from 'contexts/StoreContext';
+
 
 function Home(props) {
   let {postId} = useParams();
-    const {store} = props;
+
+
+    let {
+      posts, users, comments, likes, currentUserId, 
+      addComment, addLike, removeLike
+    } = useContext(StoreContext);
+
+
+    
   if (postId == null){
     return (
       <div>
-        {store.posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
+        {posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
         .map(post=>
         <Post
             key={post.id}
-            user={fineUser(post, store)}
+            user={fineUser(post, users)}
             post={post}
-            comments={findComments(post, store)}
-            likes={findLikes(post, store)}
-              onLike={props.onLike} 
-              onUnlike={props.onUnlike}
-              onComment={props.onComment} 
+            comments={findComments(post, comments)}
+            likes={findLikes(post, likes)}
+              onLike={addLike} 
+              onUnlike={removeLike}
+              onComment={addComment} 
           />)}
       </div>
     );
@@ -27,39 +38,43 @@ function Home(props) {
     {
     return(
       <div>
-      {store.posts.filter(post=>post.id===postId)
+      {posts.filter(post=>post.id===postId)
       .map(post=>
 			<Post
 	        key={post.id}
-	        user={fineUser(post, store)}
+	        user={fineUser(post, users)}
 	        post={post}
-	        comments={findComments(post, store)}
-	        likes={findLikes(post, store)}
-            onLike={props.onLike} 
-            onUnlike={props.onUnlike}
-            onComment={props.onComment} 
+	        comments={findComments(post, comments)}
+	        likes={findLikes(post, likes)}
+            onLike={addLike} 
+            onUnlike={removeLike}
+            onComment={addComment} 
 	      />)}
     </div>
     )
 
   }
-  
-}
 
-function fineUser(post, store){
-    return store.users.find(user=>user.id===post.userId);
+  function fineUser(post, users){
+    return users.find(user=>user.id===post.userId);
   }
-
-function findComments(post, store){
-  return store.comments.filter(comment=>comment.postId===post.id);
-}
-
-function findLikes(post, store){
-  let postLikes = store.likes.filter(like=>like.postId===post.id);
+  
+  function findComments(post, comments){
+  return comments.filter(comment=>comment.postId===post.id);
+  }
+  
+  function findLikes(post, likes){
+  let postLikes = likes.filter(like=>like.postId===post.id);
   return {
-    self: postLikes.some(like=> like.userId===store.currentUserId),
+    self: postLikes.some(like=> like.userId===currentUserId),
     count: postLikes.length
   }
+  }
+
 }
+
+
+
+
 
 export default Home;

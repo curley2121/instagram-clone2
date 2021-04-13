@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import css from './NewPost.module.css';
 import FileLoader from './FileLoader.js';
+import { useContext } from 'react';
+import { StoreContext } from 'contexts/StoreContext';
 import {
   useHistory
 } from "react-router-dom";
@@ -11,6 +13,10 @@ function NewPost(props) {
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(''); // to show an error message
+
+  let {
+    addPost
+  } = useContext(StoreContext);
 
   function handleFileDragEnter(e){
     setDragging(true);
@@ -54,7 +60,7 @@ function NewPost(props) {
     }else if (desc == ''){
       setError("Need a description");
     } else {
-      props.onPost(photo, desc);
+      addPost(photo, desc);
       history.push('/');
       setError('');
     }

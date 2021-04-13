@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from 'contexts/StoreContext';
 import css from "./Profile.module.css";
 import publicUrl from "utils/publicUrl.js";
 import PostThumbnail from './PostThumbnail';
@@ -9,14 +10,18 @@ import { useParams } from 'react-router-dom';
 
 function Profile(props) {
   let {userId} = useParams();
-    const {store} = props;
-    var user = store.users.find(user=>user.id===userId);
+  let {
+    posts, users, followers, currentUserId, 
+    addFollower, removeFollower
+  } = useContext(StoreContext);
+    
+    var user = users.find(user=>user.id===userId);
     if (userId == null){
-      user = store.users.find(user=>user.id===store.currentUserId);
+      user = users.find(user=>user.id===currentUserId);
     }
 
-    let followers = store.followers.filter(follower=>follower.userId===user.id );
-    let self = followers.some(follower=> follower.followerId===store.currentUserId)
+    let followes = followers.filter(follower=>follower.userId===user.id );
+    let self = followes.some(follower=> follower.followerId===currentUserId)
 
 
     
@@ -40,26 +45,26 @@ function Profile(props) {
       <section className={css.followers}>
             <div className={css.fItem}>
                 <button >
-                <b> {store.posts.filter(post=>post.userId===user.id).length}</b>
+                <b> {posts.filter(post=>post.userId===user.id).length}</b>
                 <p>Posts</p>
                 </button>
             </div>
             <div className={css.fItem}>
                 <button >
-                <b> {store.followers.filter(follower=>follower.userId===user.id).length}</b>
+                <b> {followers.filter(follower=>follower.userId===user.id).length}</b>
                 <p>Followers</p>
                 </button>
             </div>
             <div className={css.fItem}>
                 <button >
-                <b> {store.followers.filter(follower=>follower.followerId===user.id).length}</b>
+                <b> {followers.filter(follower=>follower.followerId===user.id).length}</b>
                 <p>Followers</p>
                 </button>
             </div>
 
       </section>
       <section className={css.posts}>
-            {store.posts.filter(post=>post.userId===user.id).map((post, i) => (
+            {posts.filter(post=>post.userId===user.id).map((post, i) => (
             <div className={css.po} key={i}>
               <Link key={post.id} to={"/" + post.id.toString()}>
               <PostThumbnail post={post}/>
@@ -73,14 +78,14 @@ function Profile(props) {
   );
 
   function handleFollow(){ 
-    props.onFollow(user.id, store.currentUserId);
+    addFollower(user.id, currentUserId);
 }
 function handleUnfollow(){
-  props.onUnfollow(user.id, store.currentUserId);
+  removeFollower(user.id, currentUserId);
 }
 
 function renderFollowButt(){
-  if (user.id !== store.currentUserId){
+  if (user.id !== currentUserId){
   return self ? (
     <button className={css.unfollowBut} onClick={handleUnfollow}>Unfollow</button>
     ) : (
