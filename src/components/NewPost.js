@@ -6,13 +6,18 @@ import { StoreContext } from 'contexts/StoreContext';
 import {
   useHistory
 } from "react-router-dom";
-
+import { Redirect } from "react-router-dom";
 function NewPost(props) {
   const history = useHistory();
   const [dragging, setDragging] = useState(false); // to show a dragging effect
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(''); // to show an error message
+
+  let {
+    posts, users, followers, currentUserId, 
+    addFollower, removeFollower
+  } = useContext(StoreContext);
 
   let {
     addPost
@@ -76,6 +81,7 @@ function NewPost(props) {
     history.push('/');
   }
   return (
+    !currentUserId?<Redirect to="login"/>:
     <div>
         
         <div className={css.photo}>

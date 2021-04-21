@@ -14,6 +14,8 @@ function Home(props) {
       addComment, addLike, removeLike
     } = useContext(StoreContext);
 
+    
+
 
     
   if (postId == null){

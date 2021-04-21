@@ -1,0 +1,90 @@
+.container{
+    height:100vh;
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header{
+    font-weight: 400;
+    align-self: flex-start;
+}
+.signupForm{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.signupForm input, .signupForm textarea{
+    box-sizing: border-box;
+    padding:10px;
+    width:100%;
+    background: rgba(var(--b3f,250,250,250),1);
+    border: 1px solid rgba(var(--d0b,219,219,219),1);
+    border-radius: 3px;
+    outline: none;
+    font-size:16px;
+    margin-bottom: 10px;;
+    
+    
+}
+.signupBtn{
+    background: #3897f0;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin:10px 0px;
+}
+.error{
+    color:#FF1744;
+    padding:4px 16px;
+}
+
+.login{
+    color:#999;
+    margin-top: 10px;;
+}
+.loginBtn{
+    color:#3897f0;
+    font-weight: 600;
+    font-size: 16px;
+    /* margin-left:10px; */
+}
+.photo{
+    /* width:100%; */
+    position: relative;
+    /* border-bottom: 1px dashed #dbdbdb; */
+    box-sizing: border-box;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 50%;
+    display: block;
+    width:50%;
+    margin-bottom: 10px;
+}
+.photo img{
+    position: absolute;
+    display: block;
+    top: 0; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dropArea{
+    position: absolute;
+    top: 0; 
+    width: 100%;
+    height: 100%;
+}
+.dragging{
+    background: white;
+    opacity: 0.8;
+}
+.message{
+    position: absolute;
+    top: 50%; 
+    width: 100%;
+}

@@ -10,6 +10,8 @@ import NewPost from "./NewPost.js";
 import Activity from "./Activity.js";
 import Profile from "./Profile.js";
 import Navbar from "./Navbar.js";
+import Login from "./Login";
+import Signup from "./Signup";
 
 import {
   BrowserRouter as Router,
@@ -53,6 +55,12 @@ function App() {
         </Route>
         <Route path="/:postId?">
           <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/signup">
+          <Signup />
         </Route>
       </Switch>
 

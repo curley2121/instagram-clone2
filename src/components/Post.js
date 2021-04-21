@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import css from "./Post.module.css";
 import timespan from "utils/timespan.js";
 import publicUrl from "utils/publicUrl.js";
+import { StoreContext } from 'contexts/StoreContext';
 import {
   Link
 } from "react-router-dom";
@@ -9,6 +11,10 @@ import {
 function Post(props) {
     const [comment, setComment] = useState('');
     const [toggleComment, setToggleComment] = useState(false); // hidden initially
+    let {
+      posts, users, followers, currentUserId, 
+      addFollower, removeFollower
+    } = useContext(StoreContext);
   return (
     <article className={css.post}>
       <header className={css.header}>

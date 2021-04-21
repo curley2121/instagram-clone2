@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import { useParams } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 function Profile(props) {
   let {userId} = useParams();
@@ -25,7 +26,11 @@ function Profile(props) {
 
 
     
+
+
+    
   return (
+    !user?<Redirect to="login"/>: 
     <div className={css.profile}>
       <header className={css.header}>
       <span className={css.hh} >
